@@ -1,4 +1,4 @@
 export default function node() {
-  let head = [];
+  const head = [];
   return { head };
 }

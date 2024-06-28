@@ -1,8 +1,34 @@
+/* eslint-disable no-plusplus */
+// eslint-disable-next-line import/extensions, import/no-named-as-default, import/no-named-as-default-member
 import node from "./node/node.js";
+
+function graphCreation(possibleMoves) {
+  const graph = [undefined];
+
+  for (let i = 0; i <= 7; i++) {
+    for (let j = 0; j <= 7; j++) {
+      graph[i * 7 + i + j] = node();
+      for (let k = 0; k <= 7; k++) {
+        if (
+          i + possibleMoves[k][0] >= 0 &&
+          i + possibleMoves[k][0] <= 7 &&
+          j + possibleMoves[k][1] >= 0 &&
+          j + possibleMoves[k][1] <= 7
+        ) {
+          graph[i * 7 + i + j].head.push([
+            [i + possibleMoves[k][0]],
+            [j + possibleMoves[k][1]],
+          ]);
+        }
+      }
+    }
+  }
+  return graph;
+}
 
 function main() {
   let graph = [];
-  let possibleMoves = [
+  const possibleMoves = [
     [2, 1],
     [2, -1],
     [-2, 1],
@@ -14,33 +40,7 @@ function main() {
   ];
 
   graph = graphCreation(possibleMoves);
-}
-
-function graphCreation(possibleMoves) {
-  let graph = [[]];
-  let res = [];
-
-  for (let i = 0; i < 7; i++) {
-    for (let j = 0; j < 7; j++) {
-      graph[i][j] = node();
-      for (let k = 0; k < 7; k++) {
-        if (
-          i + possibleMoves[k][0] >= 0 &&
-          i + possibleMoves[k][0] <= 7 &&
-          j + possibleMoves[k][1] >= 0 &&
-          j + possibleMoves[k][1] >= 0
-        )
-          res.push([i + possibleMoves[k][0]], [j + possibleMoves[k][1]]);
-      }
-      graph[i][j].head = [...res];
-      res = [];
-    }
-  }
-
   console.log(graph);
-  return graph;
 }
 
 main();
-
-function knightMoves(start, dest) {}
