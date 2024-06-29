@@ -26,6 +26,20 @@ function graphCreation(possibleMoves) {
   return graph;
 }
 
+function searchResult(start, end, graph, res = [], queue = [], count = []) {
+  if (end[0] === start[0] && end[1] === start[1]) return "ur here already";
+
+  const i = start[0] * 7 + start[0] + start[1];
+  for (let j = 0; j < graph[i].head.length; j++) {
+    queue.push(graph[i].head[j]);
+    if (graph[i].head[j][0] === end[0] && graph[i].head[j][1] === end[1]) {
+      return [end[0], end[1]];
+    }
+  }
+
+  res.push(searchResult(queue.shift(), end, graph, res, queue));
+}
+
 function main() {
   let graph = [];
   const possibleMoves = [
