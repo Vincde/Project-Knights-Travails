@@ -26,32 +26,26 @@ function graphCreation(possibleMoves) {
   return graph;
 }
 
-function searchResult(start, end, graph, res = [], queue = []) {
-  if (end[0] === start[0] && end[1] === start[1]) return "ur here already";
+function searchResult(start, end, graph) {
+  const queue = [];
+  let i = start[0] * 7 + start[0] + start[1];
+  let j = 0;
+  let w = 0;
 
-  const i = start[0] * 7 + start[0] + start[1];
-  for (let j = 0; j < graph[i].head.length; j++) {
-    if (queue.length <= 7) {
-      queue.push([graph[i].head[j]]);
-    }else{
-      queue[] //you should put every "child" into one array position at a time
+  while (start[0] !== end[0] && start[1] !== end[1]) {
+    i = start[0] * 7 + start[0] + start[1];
+    while (j < graph[i].head.length) {
+      queue.push([graph[i].head[j][0], graph[i].head[j][1]]);
+      j++;
     }
-    if (graph[i].head[j][0] === end[0] && graph[i].head[j][1] === end[1]) {
-      return res.push([end[0], end[1]]);
-    }
+
+    // eslint-disable-next-line no-param-reassign
+    start = [queue[w]];
+    w++;
+    j = 0;
   }
 
-  if (res[0] !== null) {
-    res.shift();
-  }
-
-  for (let w = 0; w < res.length; w++) {
-    if (res[w] !== queue[0]) res.push(queue[0]);
-  }
-
-  searchResult(queue.shift(), end, graph, res, queue);
-
-  return res;
+  console.log(queue);
 }
 
 function main() {
@@ -69,16 +63,15 @@ function main() {
 
   const start = [0, 2];
   const end = [5, 6];
+
+  const res = [];
   const queue = [];
-  const count = [];
-  let res = [];
 
   res.push(start);
 
   graph = graphCreation(possibleMoves);
-  res = searchResult(start, end, graph, res, queue, count);
-  console.log(res);
   console.log(graph);
+  console.log(searchResult(start, end, graph, queue, res));
 }
 
 main();
