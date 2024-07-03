@@ -26,26 +26,13 @@ function graphCreation(possibleMoves) {
   return graph;
 }
 
-function searchResult(start, end, graph) {
-  const queue = [];
-  let i = start[0] * 7 + start[0] + start[1];
+function searchResult(start, end, graph, queue, res) {
   let j = 0;
-  let w = 0;
-
-  while (start[0] !== end[0] && start[1] !== end[1]) {
-    i = start[0] * 7 + start[0] + start[1];
-    while (j < graph[i].head.length) {
-      queue.push([graph[i].head[j][0], graph[i].head[j][1]]);
-      j++;
-    }
-
-    // eslint-disable-next-line no-param-reassign
-    start = [queue[w]];
-    w++;
-    j = 0;
+  while (j <= 7) {
+    const i = start[0] * 7 + start[0] + start[1];
+    queue.push([graph[i].head[j][0], graph[i].head[j][1]]);
+    j += 1;
   }
-
-  console.log(queue);
 }
 
 function main() {
@@ -71,6 +58,9 @@ function main() {
 
   graph = graphCreation(possibleMoves);
   console.log(graph);
+
+  res.push(start);
+
   console.log(searchResult(start, end, graph, queue, res));
 }
 
