@@ -27,12 +27,17 @@ function graphCreation(possibleMoves) {
 }
 
 function searchResult(start, end, graph, queue, res) {
-  let j = 0;
-  while (j <= 7) {
-    const i = start[0] * 7 + start[0] + start[1];
-    queue.push([graph[i].head[j][0], graph[i].head[j][1]]);
-    j += 1;
+  if (end[0] === start[0] && end[1] === start[1]) {
+    console.log("ur here already");
+    return;
   }
+
+  const i = start[0] * 7 + start[0] + start[1];
+  for (let j = 0; j < graph[i].head.length; j++) {
+    queue.push(graph[i].head[j]);
+  }
+
+  searchResult(queue.shift(), end, graph, queue, res);
 }
 
 function main() {
@@ -61,7 +66,7 @@ function main() {
 
   res.push(start);
 
-  console.log(searchResult(start, end, graph, queue, res));
+  searchResult(start, end, graph, queue, res);
 }
 
 main();
