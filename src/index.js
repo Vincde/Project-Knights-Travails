@@ -16,8 +16,8 @@ function graphCreation(possibleMoves) {
           j + possibleMoves[k][1] <= 7
         ) {
           graph[i * 7 + i + j].head.push([
-            [i + possibleMoves[k][0]],
-            [j + possibleMoves[k][1]],
+            i + possibleMoves[k][0],
+            j + possibleMoves[k][1],
           ]);
         }
       }
@@ -33,11 +33,14 @@ function searchResult(start, end, graph, queue, res) {
   }
 
   const i = start[0] * 7 + start[0] + start[1];
+
   for (let j = 0; j < graph[i].head.length; j++) {
     queue.push(graph[i].head[j]);
   }
 
   searchResult(queue.shift(), end, graph, queue, res);
+
+  console.log(queue);
 }
 
 function main() {
