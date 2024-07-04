@@ -26,22 +26,22 @@ function graphCreation(possibleMoves) {
   return graph;
 }
 
-function searchResult(start, end, graph, queue, res, count = []) {
-  if (end[0] === start[0] && end[1] === start[1]) {
-    console.log("ur here already");
-    return;
+function arrayNumber(start) {
+  return start[0] * 7 + start[0] + start[1];
+}
+
+function searchResult(start, end, graph, res = [], prev = [], queue = []) {
+  for (let j = 0; j < queue.length; j++) {
+    if (queue[j][0] === end[0] && queue[j][1] === end[1]) {
+      return res.push([end[0], end[1]]);
+    }
   }
 
-  const i = start[0] * 7 + start[0] + start[1];
-
-  for (let j = 0; j < graph[i].head.length; j++) {
-    queue.push(graph[i].head[j]);
-  }
-
+  const i = arrayNumber(start);
   // eslint-disable-next-line no-param-reassign
-  count[count.length] += 1;
+  prev = ;
 
-  searchResult(queue[count], end, graph, queue, res, count);
+  searchResult(start, end, graph, res, graph[i].head);
 }
 
 function main() {
@@ -63,14 +63,12 @@ function main() {
   const res = [];
   const queue = [];
 
-  res.push(start);
-
   graph = graphCreation(possibleMoves);
   console.log(graph);
 
   res.push(start);
 
-  searchResult(start, end, graph, queue, res);
+  console.log(searchResult(start, end, graph, queue, res));
 }
 
 main();
