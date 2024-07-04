@@ -26,7 +26,7 @@ function graphCreation(possibleMoves) {
   return graph;
 }
 
-function searchResult(start, end, graph, queue, res) {
+function searchResult(start, end, graph, queue, res, count = []) {
   if (end[0] === start[0] && end[1] === start[1]) {
     console.log("ur here already");
     return;
@@ -38,9 +38,10 @@ function searchResult(start, end, graph, queue, res) {
     queue.push(graph[i].head[j]);
   }
 
-  searchResult(queue.shift(), end, graph, queue, res);
+  // eslint-disable-next-line no-param-reassign
+  count[count.length] += 1;
 
-  console.log(queue);
+  searchResult(queue[count], end, graph, queue, res, count);
 }
 
 function main() {
