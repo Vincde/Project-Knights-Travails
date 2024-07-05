@@ -26,22 +26,8 @@ function graphCreation(possibleMoves) {
   return graph;
 }
 
-function arrayNumber(start) {
-  return start[0] * 7 + start[0] + start[1];
-}
-
-function searchResult(start, end, graph, res = [], prev = [], queue = []) {
-  for (let j = 0; j < queue.length; j++) {
-    if (queue[j][0] === end[0] && queue[j][1] === end[1]) {
-      return res.push([end[0], end[1]]);
-    }
-  }
-
-  const i = arrayNumber(start);
-  // eslint-disable-next-line no-param-reassign
-  prev = ;
-
-  searchResult(start, end, graph, res, graph[i].head);
+function arrayNumber(arrayPos) {
+  return arrayPos[0] * 7 + arrayPos[0] + arrayPos[1];
 }
 
 function main() {
@@ -60,15 +46,8 @@ function main() {
   const start = [0, 2];
   const end = [5, 6];
 
-  const res = [];
-  const queue = [];
-
   graph = graphCreation(possibleMoves);
   console.log(graph);
-
-  res.push(start);
-
-  console.log(searchResult(start, end, graph, queue, res));
 }
 
 main();
