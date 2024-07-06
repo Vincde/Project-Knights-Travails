@@ -31,19 +31,27 @@ function arrayNumber(arrayPos) {
 }
 
 function searchLink(start, end, graph, queue, prev = [], res = []) {
-  if (start[0] === end[0] && start[1] === end[1]) {
-    return [...prev];
+  if (start[0][0] === end[0] && start[0][1] === end[1]) {
+    res.push([end[0], end[1]]);
+    return [start, res];
   }
 
-  const i = arrayNumber(start);
-  // eslint-disable-next-line no-param-reassign
-  prev = [...start];
+  const i = arrayNumber(start[0]);
+
+  let boh = [];
 
   for (let j = 0; j < graph[i].head.length; j++) {
-    queue.push(graph[i].head[j]);
+    queue.push([graph[i].head[j], start[0]]);
   }
 
-  return res.push([searchLink(queue.shift(), end, graph, queue, prev, res)]);
+  boh = searchLink(queue.shift(), end, graph, queue, prev, res);
+
+  if (boh[0][1][0] === start[0][0] && boh[0][1][1] === start[0][1]) {
+    // eslint-disable-next-line prefer-destructuring, no-param-reassign
+    boh[1].push([start[0][0], start[0][1]]);
+    return [start, boh[1]];
+  }
+  return [boh[0], boh[1]];
 }
 
 function main() {
@@ -59,21 +67,30 @@ function main() {
     [-1, -2],
   ];
 
-  const start = [0, 2];
-  const end = [5, 6];
+  const start = [[3, 3]];
+  const end = [4, 3];
   const queue = [];
 
   graph = graphCreation(possibleMoves);
-  console.log(graph);
 
-  const i = arrayNumber(start);
+  const i = arrayNumber(start[0]);
 
   for (let j = 0; j < graph[i].head.length; j++) {
-    queue.push(graph[i].head[j]);
+    queue.push([graph[i].head[j], start[0]]);
   }
 
   const res = searchLink(start, end, graph, queue);
-  console.log(res);
+  const finalRes = res[1];
+  finalRes.reverse();
+  console.log(
+    `There you go! You made it in ${
+      finalRes.length - 1
+    } moves! The moves are: \n`
+  );
+
+  for (let w = 0; w < finalRes.length; w++) {
+    console.log(`[${finalRes[w]}] \n`);
+  }
 }
 
 main();
